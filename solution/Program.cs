@@ -107,13 +107,12 @@ int GetMinimalRange(double[] arrayWithCoords)
     }
 }
 
-
-
 char[,] city = new char[10, 10];
 int numbersOfStores = GetDataFromUser("Введите ваше количество магазинов: ");
 
 CreateCityMap(city);
 double[] arrayWithCoords = GetStoresCoords(city, numbersOfStores);
-int minimalIndexFirstStore = GetMinimalRange(arrayWithCoords);
+int minimalIndexStore = GetMinimalRange(arrayWithCoords);
+
 Console.WriteLine();
-Console.WriteLine($"Ближайшие друг к другу магазины находятся на координатах: {arrayWithCoords[minimalIndexFirstStore]} и {arrayWithCoords[minimalIndexFirstStore+1]}.");
+Console.WriteLine($"Ближайшие друг к другу магазины находятся на координатах: {arrayWithCoords[minimalIndexStore]} и {arrayWithCoords[minimalIndexStore + 1]}.");
