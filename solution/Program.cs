@@ -1,5 +1,4 @@
-﻿
-int GetDataFromUser(string text)
+﻿int GetDataFromUser(string text)
 {
     bool flag = false;
     int value = 0;
@@ -33,7 +32,7 @@ void ShowMapCity(char[,] matrix)
     {
         for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            Console.Write($"{matrix[i, j]}");
+            Console.Write($"{matrix[i, j]} ");
         }
         Console.WriteLine();
     }
@@ -43,18 +42,18 @@ double[] GetStoresCoords(char[,] matrix, int counts)
 {
     int x = 0;
     int y = 0;
-    int indexStart = 1;
+    int start = 1;
     bool flag = false;
     double[] arrayWithCoords = new double[counts];
     for (int i = 0; i < counts; i++)
     {
         while (!flag)
         {
-            Console.Write($"Введите координаты {indexStart} магазина через запятую: ");
-            string[] tokens = Console.ReadLine().Split(',');
-            flag = int.TryParse(tokens[0], out x);
-            flag = int.TryParse(tokens[1], out y);
-            if (x > 10 || y > 10)
+            Console.Write($"Введите координаты {start} магазина через запятую: ");
+            string[] coords = Console.ReadLine().Split(',');
+            flag = int.TryParse(coords[0], out x);
+            flag = int.TryParse(coords[1], out y);
+            if (x > 9 || y > 9)
             {
                 Console.WriteLine("Координаты вышли за пределелы города.");
                 flag = false;
@@ -65,7 +64,7 @@ double[] GetStoresCoords(char[,] matrix, int counts)
         double yForCooords = Convert.ToDouble(y);
         arrayWithCoords[i] = (xForCooords * 10 + yForCooords) / 10;
         ShowMapCity(matrix);
-        indexStart++;
+        start++;
         flag = false;
     }
     for (int i = 0; i < arrayWithCoords.Length; i++)
@@ -90,22 +89,24 @@ int GetMinimalRange(double[] arrayWithCoords)
         int indexForArray = 0;
         for (int i = 1; i < arrayWithDifferense.Length + 1; i++)
         {
-            arrayWithDifferense[indexForArray] = Math.Round(arrayWithCoords[i - 1] - arrayWithCoords[i], 2);
+            arrayWithDifferense[indexForArray] = arrayWithCoords[i - 1] - arrayWithCoords[i];
             indexForArray++;
         }
         int indexMinPosition = 0;
+        for (int i = 0; i < arrayWithDifferense.Length; i++)
+        {
+            for (int j = 0; j < arrayWithDifferense.Length; j++)
+            {
+                if (arrayWithDifferense[i] < arrayWithDifferense[indexMinPosition])
+                {
+                    indexMinPosition = i;
+                }
+            }
+        }
         return indexMinPosition;
     }
 }
 
-
-void ShowArrayWithCoords(double[] array)
-{
-    for (int i = 0; i < array.Length; i++)
-    {
-        Console.Write($"{array[i]} ");
-    }
-}
 
 
 char[,] city = new char[10, 10];
@@ -113,4 +114,6 @@ int numbersOfStores = GetDataFromUser("Введите ваше количест�
 
 CreateCityMap(city);
 double[] arrayWithCoords = GetStoresCoords(city, numbersOfStores);
-ShowArrayWithCoords(arrayWithCoords);
+int minimalIndexFirstStore = GetMinimalRange(arrayWithCoords);
+Console.WriteLine();
+Console.WriteLine($"Ближайшие друг к другу магазины находятся на координатах: {arrayWithCoords[minimalIndexFirstStore]} и {arrayWithCoords[minimalIndexFirstStore+1]}.");
