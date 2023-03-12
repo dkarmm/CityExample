@@ -46,12 +46,13 @@ void ShowMapCity(char[,] matrix)
     }
 }
 
-char[,] GetStoresCoords(char[,] matrix, int counts)
+double [] GetStoresCoords(char[,] matrix, int counts)
 {
     int x = 0;
     int y = 0;
     int indexStart = 1;
     bool flag = false;
+    double [] arrayWithCoords = new double [counts];
     for (int i = 0; i < counts; i++)
     {
         while (!flag)
@@ -67,15 +68,27 @@ char[,] GetStoresCoords(char[,] matrix, int counts)
             }
         }
         matrix[x, y] = 'x';
+        double xForCooords = Convert.ToDouble(x);
+        double yForCooords = Convert.ToDouble(y);
+        arrayWithCoords[i] = (xForCooords * 10 + yForCooords)/10; 
         ShowMapCity(matrix);
         indexStart++;
         flag = false;
     }
-    return matrix;
+    return arrayWithCoords;
+}
+
+void ShowArray(double [] array)
+{
+    for(int i = 0; i < array.Length; i++)
+    {
+        Console.Write($"{array[i]} ");
+    }
 }
 
 char[,] city = new char[10, 10];
 int numbersOfStores = GetDataFromUser("Введите ваше количество магазинов: ");
 
 CreateCityMap(city);
-GetStoresCoords(city, numbersOfStores);
+double [] arrayWithCoords = GetStoresCoords(city, numbersOfStores);
+ShowArray(arrayWithCoords);
