@@ -83,9 +83,8 @@ double[] GetStoresCoords(char[,] matrix, int counts)
     return arrayWithCoords;
 }
 
-double[] GetMinimalRange(double[] arrayWithCoords)
+int GetMinimalRange(double[] arrayWithCoords)
 {
-
     double[] arrayWithDifferense = new double[arrayWithCoords.Length - 1];
     {
         int indexForArray = 0;
@@ -94,37 +93,11 @@ double[] GetMinimalRange(double[] arrayWithCoords)
             arrayWithDifferense[indexForArray] = Math.Round(arrayWithCoords[i - 1] - arrayWithCoords[i], 2);
             indexForArray++;
         }
+        int indexMinPosition = 0;
+        return indexMinPosition;
     }
-    return arrayWithDifferense;
 }
 
-// int[] GetStoresRange(char[,] matrix, int counts)
-// {
-//     int[] arrayWithRanges = new int[counts];
-//     int indexForArray = 0;
-//     for (int i = 0; i < matrix.GetLength(0); i++)
-//     {
-//         for (int j = 0; j < matrix.GetLength(1); j++)
-//         {
-//             if(matrix[i, j] == 'x')
-//             {
-//                 arrayWithRanges[indexForArray] = i + j;
-//                 indexForArray++;
-//             }
-//         }
-//     }
-//     return arrayWithRanges;
-// }
-
-// int FindMinimalRange(int [] arrayWithRanges)
-// {
-//     int indexMinPosition = 0;
-//     for(int i = 0; i < arrayWithRanges.Length; i++)
-//     {
-//         if(arrayWithRanges[i] < arrayWithRanges[indexMinPosition]) indexMinPosition = i;
-//     }
-//     return indexMinPosition;
-// }
 
 void ShowArrayWithCoords(double[] array)
 {
@@ -134,21 +107,10 @@ void ShowArrayWithCoords(double[] array)
     }
 }
 
-// void ShowArrayWithRange(int[] array)
-// {
-//     for (int i = 0; i < array.Length; i++)
-//     {
-//         Console.Write($"{array[i]} ");
-//     }
-// }
-
 
 char[,] city = new char[10, 10];
 int numbersOfStores = GetDataFromUser("Введите ваше количество магазинов: ");
 
 CreateCityMap(city);
 double[] arrayWithCoords = GetStoresCoords(city, numbersOfStores);
-// int [] arrayWithRange = GetStoresRange(city, numbersOfStores);
 ShowArrayWithCoords(arrayWithCoords);
-Console.WriteLine();
-ShowArrayWithCoords(GetMinimalRange(arrayWithCoords));
